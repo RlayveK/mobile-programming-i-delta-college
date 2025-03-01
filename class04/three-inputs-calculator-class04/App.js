@@ -28,11 +28,11 @@ export default function App() {
         setResult((number1 * number2 * number3).toString());
         break;
       case '/':
-        setResult(number2 !== 0 ? (number1 / number2 / number3).toString() : 'Error');
+        setResult(number2 !== 0 && number3 !==0 ? (number1 / number2/number3).toString() : 'Error');
         break;
-      case 'C':
-        setResult('');
-        setNum1('');        
+        case 'C':
+        setResult("".toString());
+        setNum1('');
         setNum2('');
         setNum3('');
         break;
