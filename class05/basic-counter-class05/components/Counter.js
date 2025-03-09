@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-
 export default function Counter() {
   const [count, setCount] = useState(0);
   const maxLimit = 10;
+  const minLimit = 0;
 
   const increment = () => {
     if (count < maxLimit) {
@@ -12,12 +12,31 @@ export default function Counter() {
     }
   };
 
+  const decrement = () => {
+    if (count > minLimit) {
+      setCount(count - 1)
+    }
+  };
+
+  const clear = () => {
+    setCount(minLimit)
+  };
+
+
+
   return (
     <View style={styles.container}>
+
+
+
       <Text style={styles.title}>Counter</Text>
-      <Text style={[styles.counter, count === maxLimit && styles.maxReached]}>
-        {count}
-      </Text>
+      
+      <TouchableOpacity onLongPress={clear}>
+        <Text style={[styles.counter, (count === maxLimit || count === minLimit) && styles.maxReached]}>
+          {count}
+        </Text>
+      </TouchableOpacity>
+
       <TouchableOpacity
         onPress={increment}
         style={[styles.button, count === maxLimit && styles.disabledButton]}
@@ -27,6 +46,26 @@ export default function Counter() {
           {count === maxLimit ? "Limit Reached" : "Increase"}
         </Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={decrement}
+        style={[styles.button, count <= minLimit && styles.disabledButton]}
+        disabled={count <= minLimit}
+      >
+        <Text style={styles.buttonText}>
+          {count <= minLimit ? "Limit Reached" : "Decrease"}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={clear}
+        style={[styles.button, count <= minLimit && styles.disabledButton]}
+        disabled={count <= minLimit}
+      >
+        <Text style={styles.buttonText}>
+          {count <= minLimit ? "Cleaned" : "Clear"}
+        </Text>
+      </TouchableOpacity>
+
     </View>
   );
 }
@@ -62,6 +101,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.5,
     shadowRadius: 10,
+    marginBottom: 5
   },
   buttonText: {
     fontSize: 18,
